@@ -1,8 +1,12 @@
-# Debugging Notes
+# Debugging Notes (Fly.io Support Engineer Application)
 
 This repo is part of my application for the Fly.io Support Engineer role.
 
 A collection of real issues I ran into while working on small projects and deployments, along with how I approached fixing them.
+
+## How I approach debugging
+
+When something breaks, I start by checking logs and trying to understand whether the issue is coming from code, environment, or configuration. From there, I narrow things down step by step before jumping to a fix.
 
 ---
 
@@ -12,9 +16,9 @@ A collection of real issues I ran into while working on small projects and deplo
 Deployment failed during the build step.
 
 **What I checked**  
-- Vercel build logs  
-- Local build vs production build  
-- Environment variables  
+- Looked at Vercel build logs to determine if this was a code issue or environment issue  
+- Compared local build behavior with production  
+- Checked environment variables in both environments  
 
 **Fix**  
 A required environment variable was missing in production. Added it in Vercel settings and redeployed.
@@ -30,9 +34,9 @@ Always compare local and production environments first. Missing environment vari
 Custom domain wasn’t loading after setup.
 
 **What I checked**  
-- DNS records  
-- Domain provider settings  
-- Propagation status  
+- Verified DNS records to confirm traffic was pointing correctly  
+- Reviewed domain provider settings to ensure correct configuration  
+- Checked propagation status to verify if changes had propagated globally  
 
 **Fix**  
 DNS records were pointing to the wrong target. Updated them and waited for propagation.
@@ -48,15 +52,32 @@ Start with DNS when dealing with domain issues. Most problems come from configur
 Route worked locally but returned 404 in production.
 
 **What I checked**  
-- File structure  
-- Routing configuration  
-- Case sensitivity differences  
+- Examined file structure to ensure paths matched expectations  
+- Checked routing configuration to verify exact setup  
+- Investigated case sensitivity differences between local and production file systems  
 
 **Fix**  
 File naming mismatch caused the issue in a case-sensitive production environment.
 
 **Takeaway**  
 Production environments are stricter than local. File naming and paths need to be exact.
+
+---
+
+## 4. App not starting due to port issue
+
+**Issue**  
+Application failed to start locally.
+
+**What I checked**  
+- Checked which port the app was trying to use  
+- Looked for conflicts with other running processes  
+
+**Fix**  
+Another process was already using the port. Stopped the conflicting process and restarted the app.
+
+**Takeaway**  
+Port conflicts are easy to miss. Always check if something else is already running.
 
 ---
 
